@@ -1,34 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolioData';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+  const form = useRef();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    setTimeout(() => {
+
+    emailjs.sendForm(
+      'YOUR_SERVICE_ID',
+      'YOUR_TEMPLATE_ID',
+      form.current,
+      'YOUR_PUBLIC_KEY'
+    ).then(() => {
       setIsSubmitting(false);
       setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      form.current.reset();
       setTimeout(() => setSubmitted(false), 5000);
-    }, 1500);
+    }).catch((error) => {
+      console.error('EmailJS error:', error);
+      setIsSubmitting(false);
+    });
   };
 
   return (
@@ -54,16 +51,16 @@ const Contact = () => {
             </div>
           </div>
           
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <form ref={form} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {submitted && (
               <div style={{ background: 'rgba(100, 244, 171, 0.1)', color: '#64f4ab', padding: '15px', borderRadius: '10px', border: '1px solid rgba(100, 244, 171, 0.2)', textAlign: 'center' }}>
                 Message sent successfully!
               </div>
             )}
-            <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} required />
-            <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} required />
-            <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} required />
-            <textarea name="message" placeholder="Your Message" value={formData.message} onChange={handleChange} required rows="5" style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem', resize: 'vertical' }} />
+            <input type="text" name="user_name" placeholder="Your Name" required style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} />
+            <input type="email" name="user_email" placeholder="Your Email" required style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} />
+            <input type="text" name="subject" placeholder="Subject" required style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} />
+            <textarea name="message" placeholder="Your Message" required rows="5" style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem', resize: 'vertical' }} />
             <button type="submit" style={{ padding: '15px 40px', background: 'linear-gradient(135deg, #64f4ab, #3b82f6)', color: '#fff', border: 'none', borderRadius: '50px', fontSize: '1.1rem', fontWeight: '600', cursor: 'pointer' }} disabled={isSubmitting}>
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
