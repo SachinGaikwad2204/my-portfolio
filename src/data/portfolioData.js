@@ -1,10 +1,10 @@
-﻿export const personalInfo = {
+export const personalInfo = {
   name: 'Sachin Sominath Gaikwad',
   title: 'Full Stack Software Developer',
   email: 'sachingaikwadbn@gmail.com',
   phone: '+91 97657 52923',
   location: 'Pune, Maharashtra, India',
-   github: 'https://github.com/SachinGaikwad2204',
+  github: 'https://github.com/SachinGaikwad2204',
   linkedin: 'https://linkedin.com/in/yourusername',
   summary: 'Passionate and driven Full Stack Software Developer with hands-on experience designing, building, and deploying production-ready web applications from the ground up. Proficient in Java Spring Boot REST API development, React.js frontend engineering, relational database design, and cloud deployment via Vercel.'
 };
@@ -48,14 +48,3 @@ export const projects = [
     ]
   }
 ];
-
-export const experience = {
-  highlights: [
-    'Deployed 2 full-stack production applications on Vercel with live traffic',
-    'Improved API response time by 30% (500ms -> 350ms)',
-    'Reduced database retrieval time by 35% via optimized MySQL schema',
-    'Reduced boilerplate SQL code by 60% leveraging Hibernate ORM',
-    'Secured 100% of API endpoints using JWT authentication and RBAC',
-    'Reduced manual HR tracking effort by 50% through automated attendance module'
-  ]
-};
