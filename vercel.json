@@ -1,12 +1,8 @@
 {
-  "name": "sachin-gaikwad-portfolio",
+  "version": 2,
   "buildCommand": "CI=false npm run build",
   "outputDirectory": "build",
   "routes": [
-    { "src": "/static/(.*)", "dest": "/static/" },
-    { "src": "/favicon.ico", "dest": "/favicon.ico" },
-    { "src": "/manifest.json", "dest": "/manifest.json" },
-    { "src": "/robots.txt", "dest": "/robots.txt" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/" }
   ]
 }
