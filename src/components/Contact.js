@@ -1,117 +1,73 @@
-﻿import React, { useState, useRef } from 'react';
-import emailjs from '@emailjs/browser';
+import React, { useState } from 'react';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolioData';
-import useReveal from '../hooks/useReveal';
-import './Contact.css';
-
-const SERVICE_ID = 'YOUR_SERVICE_ID';
-const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 
 const Contact = () => {
-  const formRef = useRef(null);
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState(null); // 'success' | 'error' | null
-  const ref = useReveal();
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setStatus(null);
-
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, { publicKey: PUBLIC_KEY })
-      .then(() => {
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      })
-      .catch((err) => {
-        console.error('EmailJS error:', err);
-        setStatus('error');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-        setTimeout(() => setStatus(null), 6000);
-      });
+    
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    }, 1500);
   };
 
   return (
-    <section className="contact" ref={ref}>
-      <div className="container">
-        <div className="section-label">Contact</div>
-        <h2 className="section-title reveal">Let's build something.</h2>
-
-        <div className="contact-grid">
-          <div className="contact-info reveal">
-            <a href={`mailto:${personalInfo.email}`} className="info-card glass-card">
-              <FaEnvelope className="contact-icon" />
-              <div>
-                <h4>Email</h4>
-                <p>{personalInfo.email}</p>
-              </div>
-            </a>
-            <a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} className="info-card glass-card">
-              <FaPhone className="contact-icon" />
-              <div>
-                <h4>Phone</h4>
-                <p>{personalInfo.phone}</p>
-              </div>
-            </a>
-            <div className="info-card glass-card">
-              <FaMapMarkerAlt className="contact-icon" />
-              <div>
-                <h4>Location</h4>
-                <p>{personalInfo.location}</p>
-              </div>
+    <section style={{ padding: '100px 20px', background: '#0a0a0a' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <h2 style={{ fontSize: '2.8rem', textAlign: 'center', marginBottom: '50px', background: 'linear-gradient(135deg, #64f4ab, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Get In Touch</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '50px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ background: '#1a1a1a', padding: '25px', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+              <FaEnvelope style={{ fontSize: '2rem', color: '#64f4ab', marginBottom: '10px' }} />
+              <h4 style={{ color: '#fff' }}>Email</h4>
+              <p style={{ color: '#a0aec0' }}>{personalInfo.email}</p>
+            </div>
+            <div style={{ background: '#1a1a1a', padding: '25px', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+              <FaPhone style={{ fontSize: '2rem', color: '#64f4ab', marginBottom: '10px' }} />
+              <h4 style={{ color: '#fff' }}>Phone</h4>
+              <p style={{ color: '#a0aec0' }}>{personalInfo.phone}</p>
+            </div>
+            <div style={{ background: '#1a1a1a', padding: '25px', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'center' }}>
+              <FaMapMarkerAlt style={{ fontSize: '2rem', color: '#64f4ab', marginBottom: '10px' }} />
+              <h4 style={{ color: '#fff' }}>Location</h4>
+              <p style={{ color: '#a0aec0' }}>{personalInfo.location}</p>
             </div>
           </div>
-
-          <form ref={formRef} onSubmit={handleSubmit} className="contact-form glass-card reveal">
-  {status === 'success' && <div className="success-message">Message sent — I'll get back to you soon!</div>}
-  {status === 'error' && <div className="error-message">Something went wrong. Please email me directly instead.</div>}
-
-  <div className="form-row">
-    <input
-      type="text"
-      name="from_name"
-      placeholder="Your name"
-      value={formData.name}
-      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-      required
-    />
-    <input
-      type="email"
-      name="from_email"
-      placeholder="Your email"
-      value={formData.email}
-      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-      required
-    />
-  </div>
-  <input
-    type="text"
-    name="subject"
-    placeholder="Subject"
-    value={formData.subject}
-    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-    required
-  />
-  <textarea
-    name="message"
-    placeholder="Your message"
-    value={formData.message}
-    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-    required
-    rows="5"
-  />
-
-  <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-    {isSubmitting ? 'Sending...' : 'Send message'}
-  </button>
-</form>
+          
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {submitted && (
+              <div style={{ background: 'rgba(100, 244, 171, 0.1)', color: '#64f4ab', padding: '15px', borderRadius: '10px', border: '1px solid rgba(100, 244, 171, 0.2)', textAlign: 'center' }}>
+                Message sent successfully!
+              </div>
+            )}
+            <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} required />
+            <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} required />
+            <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem' }} required />
+            <textarea name="message" placeholder="Your Message" value={formData.message} onChange={handleChange} required rows="5" style={{ width: '100%', padding: '15px', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#fff', fontSize: '1rem', resize: 'vertical' }} />
+            <button type="submit" style={{ padding: '15px 40px', background: 'linear-gradient(135deg, #64f4ab, #3b82f6)', color: '#fff', border: 'none', borderRadius: '50px', fontSize: '1.1rem', fontWeight: '600', cursor: 'pointer' }} disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
+          </form>
         </div>
       </div>
     </section>

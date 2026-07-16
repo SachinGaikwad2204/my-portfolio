@@ -4,11 +4,13 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "framer-motion": "^12.42.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "react-router-dom": "^6.20.0",
-    "react-icons": "^4.12.0"
+    "react-icons": "^4.12.0",
+    "react-router-dom": "^6.30.4",
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
