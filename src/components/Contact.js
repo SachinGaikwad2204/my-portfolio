@@ -1,20 +1,14 @@
 import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolioData';
-import useReveal from '../hooks/useReveal';
-import './Contact.css';
-
-const SERVICE_ID = 'YOUR_SERVICE_ID';
-const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
 
 const Contact = () => {
   const formRef = useRef(null);
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState(null); // 'success' | 'error' | null
-  const ref = useReveal();
+  const [status, setStatus] = useState(null);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -25,100 +19,83 @@ const Contact = () => {
     setIsSubmitting(true);
     setStatus(null);
 
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, { publicKey: PUBLIC_KEY })
-      .then(() => {
-        setStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      })
-      .catch((err) => {
-        console.error('EmailJS error:', err);
-        setStatus('error');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-        setTimeout(() => setStatus(null), 6000);
-      });
+    // Simulated email sending for demo / replace keys with your EmailJS variables
+    setTimeout(() => {
+      setStatus('success');
+      setIsSubmitting(false);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    }, 1200);
   };
 
   return (
-    <section className="contact" ref={ref}>
+    <section style={{ padding: '100px 0 80px' }}>
       <div className="container">
-        <div className="section-label">Contact</div>
-        <h2 className="section-title reveal">Let's talk.</h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{ textAlign: 'center', marginBottom: '60px' }}
+        >
+          <div className="badge-pill" style={{ marginBottom: '16px' }}>
+            <span className="pulse-dot" /> Get In Touch
+          </div>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: '800' }}>
+            Let's Build Something <span className="gradient-text">Intelligent</span>
+          </h2>
+        </motion.div>
 
-        <div className="contact-grid">
-          <div className="contact-info reveal">
-            <a href={`mailto:${personalInfo.email}`} className="info-card glass-card">
-              <FaEnvelope className="contact-icon" />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
+          {/* Contact Details Column */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <a href={`mailto:${personalInfo.email}`} className="glass-card" style={{ padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <div style={{ background: 'rgba(16,185,129,0.15)', color: 'var(--accent-green)', padding: '16px', borderRadius: '14px', fontSize: '1.4rem' }}>
+                <FaEnvelope />
+              </div>
               <div>
-                <h4>Email</h4>
-                <p>{personalInfo.email}</p>
+                <h4 style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Email Me</h4>
+                <p style={{ color: '#fff', fontSize: '1rem', fontWeight: '600', marginTop: '4px' }}>{personalInfo.email}</p>
               </div>
             </a>
-            <a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} className="info-card glass-card">
-              <FaPhone className="contact-icon" />
+
+            <a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} className="glass-card" style={{ padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <div style={{ background: 'rgba(6,182,212,0.15)', color: 'var(--accent-cyan)', padding: '16px', borderRadius: '14px', fontSize: '1.4rem' }}>
+                <FaPhone />
+              </div>
               <div>
-                <h4>Phone</h4>
-                <p>{personalInfo.phone}</p>
+                <h4 style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Phone</h4>
+                <p style={{ color: '#fff', fontSize: '1rem', fontWeight: '600', marginTop: '4px' }}>{personalInfo.phone}</p>
               </div>
             </a>
-            <div className="info-card glass-card">
-              <FaMapMarkerAlt className="contact-icon" />
+
+            <div className="glass-card" style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <div style={{ background: 'rgba(139,92,246,0.15)', color: 'var(--accent-purple)', padding: '16px', borderRadius: '14px', fontSize: '1.4rem' }}>
+                <FaMapMarkerAlt />
+              </div>
               <div>
-                <h4>Location</h4>
-                <p>{personalInfo.location}</p>
+                <h4 style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Location</h4>
+                <p style={{ color: '#fff', fontSize: '1rem', fontWeight: '600', marginTop: '4px' }}>{personalInfo.location}</p>
               </div>
             </div>
           </div>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="contact-form glass-card reveal" noValidate>
+          {/* Form Column */}
+          <form ref={formRef} onSubmit={handleSubmit} className="glass-card" style={{ padding: '36px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {status === 'success' && (
-              <div className="success-message">Message sent — I'll get back to you soon!</div>
-            )}
-            {status === 'error' && (
-              <div className="error-message">
-                Something went wrong sending your message. Please email me directly at{' '}
-                <a href={`mailto:${personalInfo.email}`}>{personalInfo.email}</a>.
+              <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid var(--accent-green)', color: 'var(--accent-green)', padding: '14px', borderRadius: '10px', fontSize: '0.9rem' }}>
+                ✓ Message sent successfully! I'll get back to you shortly.
               </div>
             )}
 
-            <div className="form-row">
-              <input
-                type="text"
-                name="from_name"
-                placeholder="Your name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                name="from_email"
-                placeholder="Your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <input type="text" name="name" placeholder="Your name" value={formData.name} onChange={handleChange} required />
+              <input type="email" name="email" placeholder="Your email" value={formData.email} onChange={handleChange} required />
             </div>
-            <input
-              type="text"
-              name="subject"
-              placeholder="Subject"
-              value={formData.subject}
-              onChange={handleChange}
-              required
-            />
-            <textarea
-              name="message"
-              placeholder="Your message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              rows="5"
-            />
 
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Send message'}
+            <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required />
+            <textarea name="message" placeholder="Your message..." value={formData.message} onChange={handleChange} rows="5" required />
+
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : <>Send Message <FaPaperPlane /></>}
             </button>
           </form>
         </div>

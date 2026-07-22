@@ -1,76 +1,142 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { FaBrain, FaServer, FaCode, FaDatabase, FaShieldAlt, FaTools, FaCheck } from 'react-icons/fa';
 import { skills } from '../data/portfolioData';
+
+const skillCategories = [
+  { key: 'AI/ML & LLM', icon: <FaBrain />, featured: true },
+  { key: 'Languages', icon: <FaCode /> },
+  { key: 'Backend', icon: <FaServer /> },
+  { key: 'Frontend', icon: <FaCode /> },
+  { key: 'Database', icon: <FaDatabase /> },
+  { key: 'Security', icon: <FaShieldAlt /> },
+  { key: 'Tools & DevOps', icon: <FaTools /> },
+];
 
 const Skills = () => {
   return (
-    <section style={{ padding: '100px 20px', background: '#0a0a0a' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: '2.8rem', textAlign: 'center', marginBottom: '20px', background: 'linear-gradient(135deg, #64f4ab, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          What I build with.
-        </h2>
-        <p style={{ textAlign: 'center', color: '#a0aec0', marginBottom: '50px', fontSize: '1.1rem' }}>
-          Technologies and tools I work with
-        </p>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '25px' }}>
-          {Object.entries(skills).map(([category, items]) => (
-            <div 
-              key={category} 
-              style={{ 
-                background: '#1a1a1a',
-                padding: '25px', 
-                borderRadius: '12px', 
-                border: '1px solid rgba(255,255,255,0.06)',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px)';
-                e.currentTarget.style.borderColor = 'rgba(100, 244, 171, 0.2)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            >
-              <h3 style={{ 
-                color: '#64f4ab', 
-                marginBottom: '15px', 
-                fontSize: '1.1rem', 
-                fontWeight: '600',
-                letterSpacing: '0.5px'
-              }}>
-                {category}
+    <section style={{ padding: '100px 0 80px' }}>
+      <div className="container">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{ textAlign: 'center', marginBottom: '60px' }}
+        >
+          <div className="badge-pill" style={{ marginBottom: '16px' }}>
+            <span className="pulse-dot" /> Technical Stack
+          </div>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: '800' }}>
+            Engineered for <span className="gradient-text">AI & Scale</span>
+          </h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginTop: '12px' }}>
+            Production-proven tools for building intelligent, scalable cloud applications.
+          </p>
+        </motion.div>
+
+        {/* Featured AI/ML Focus Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card"
+          style={{
+            padding: '36px',
+            marginBottom: '40px',
+            background: 'linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(6,182,212,0.05) 100%)',
+            border: '1px solid rgba(16, 185, 129, 0.3)'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
+            <div style={{
+              background: 'rgba(16,185,129,0.2)',
+              color: 'var(--accent-green)',
+              padding: '12px',
+              borderRadius: '12px',
+              fontSize: '1.5rem',
+              display: 'flex'
+            }}>
+              <FaBrain />
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fff' }}>
+                AI/ML & Generative AI Core
               </h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {items.map((skill, index) => (
-                  <span 
-                    key={index} 
-                    style={{ 
-                      background: 'rgba(100, 244, 171, 0.07)',
-                      color: '#64f4ab',
-                      padding: '6px 16px', 
-                      borderRadius: '20px', 
-                      fontSize: '0.85rem',
-                      border: '1px solid rgba(100, 244, 171, 0.08)',
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                Specialized in LLM integration, speech processing, and prompt engineering
+              </p>
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
+            {skills['AI/ML & LLM'].map((item, idx) => (
+              <div key={idx} style={{
+                background: 'rgba(10, 15, 28, 0.6)',
+                padding: '14px 18px',
+                borderRadius: '12px',
+                border: '1px solid rgba(255,255,255,0.06)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                <FaCheck style={{ color: 'var(--accent-green)', flexShrink: 0 }} />
+                <span style={{ fontSize: '0.95rem', fontWeight: '500' }}>{item}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Other Skill Categories Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          {skillCategories.filter(cat => cat.key !== 'AI/ML & LLM').map((cat, idx) => (
+            <motion.div
+              key={cat.key}
+              className="glass-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              style={{ padding: '28px' }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                <span style={{ color: 'var(--accent-cyan)', fontSize: '1.2rem', display: 'flex' }}>
+                  {cat.icon}
+                </span>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#fff' }}>{cat.key}</h3>
+              </div>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {skills[cat.key]?.map((skill, sIdx) => (
+                  <span
+                    key={sIdx}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: 'var(--text-main)',
+                      padding: '8px 16px',
+                      borderRadius: '10px',
+                      fontSize: '0.88rem',
+                      fontWeight: '500',
                       transition: 'all 0.2s ease',
                       cursor: 'default'
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(100, 244, 171, 0.15)';
-                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.borderColor = 'var(--accent-green)';
+                      e.currentTarget.style.color = 'var(--accent-green)';
+                      e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(100, 244, 171, 0.07)';
-                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                      e.currentTarget.style.color = 'var(--text-main)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
                     }}
                   >
                     {skill}
                   </span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
