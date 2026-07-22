@@ -1,14 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaExclamationTriangle } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolioData';
 
 const Contact = () => {
-  const formRef = useRef(null);
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState(null);
+  const [showError, setShowError] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -16,15 +13,16 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setStatus(null);
 
-    // Simulated email sending for demo / replace keys with your EmailJS variables
-    setTimeout(() => {
-      setStatus('success');
-      setIsSubmitting(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1200);
+    // Trigger error message immediately
+    setShowError(true);
+
+    // Automatically trigger mailto link as a backup
+    const emailSubject = encodeURIComponent(formData.subject || 'Portfolio Inquiry');
+    const emailBody = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    window.location.href = `mailto:${personalInfo.email}?subject=${emailSubject}&body=${emailBody}`;
   };
 
   return (
@@ -45,7 +43,7 @@ const Contact = () => {
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
-          {/* Contact Details Column */}
+          {/* Contact Details */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <a href={`mailto:${personalInfo.email}`} className="glass-card" style={{ padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px' }}>
               <div style={{ background: 'rgba(16,185,129,0.15)', color: 'var(--accent-green)', padding: '16px', borderRadius: '14px', fontSize: '1.4rem' }}>
@@ -57,7 +55,7 @@ const Contact = () => {
               </div>
             </a>
 
-            <a href={`tel:${personalInfo.phone.replace(/\s/g, '')}`} className="glass-card" style={{ padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <a href={`tel:${personalInfo.phone?.replace(/\s/g, '')}`} className="glass-card" style={{ padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px' }}>
               <div style={{ background: 'rgba(6,182,212,0.15)', color: 'var(--accent-cyan)', padding: '16px', borderRadius: '14px', fontSize: '1.4rem' }}>
                 <FaPhone />
               </div>
@@ -78,12 +76,32 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Form Column */}
-          <form ref={formRef} onSubmit={handleSubmit} className="glass-card" style={{ padding: '36px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {status === 'success' && (
-              <div style={{ background: 'rgba(16, 185, 129, 0.15)', border: '1px solid var(--accent-green)', color: 'var(--accent-green)', padding: '14px', borderRadius: '10px', fontSize: '0.9rem' }}>
-                ✓ Message sent successfully! I'll get back to you shortly.
-              </div>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="glass-card" style={{ padding: '36px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {showError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  border: '1px solid #ef4444',
+                  color: '#f87171',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  fontSize: '0.92rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px'
+                }}
+              >
+                <FaExclamationTriangle style={{ fontSize: '1.4rem', flexShrink: 0, color: '#ef4444' }} />
+                <span>
+                  Unable to send directly from form. Opening email client, or click{' '}
+                  <a href={`mailto:${personalInfo.email}`} style={{ color: '#fff', underline: 'always', fontWeight: 'bold' }}>
+                    here to send email
+                  </a>.
+                </span>
+              </motion.div>
             )}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -94,8 +112,8 @@ const Contact = () => {
             <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required />
             <textarea name="message" placeholder="Your message..." value={formData.message} onChange={handleChange} rows="5" required />
 
-            <button type="submit" className="btn-primary" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : <>Send Message <FaPaperPlane /></>}
+            <button type="submit" className="btn-primary">
+              Send Message <FaPaperPlane />
             </button>
           </form>
         </div>
