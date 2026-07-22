@@ -22,8 +22,7 @@ export const skills = {
     'Natural Language Processing (NLP)',
     'AI/ML Model Integration',
     'Intelligent Conversational AI',
-    'Fine-tuning LLMs',
-    'Voice AI JARVIS Core Development'
+    'Fine-tuning LLMs'
   ],
   'Security': ['JWT', 'Spring Security', 'RBAC', 'OAuth2'],
   'Tools & DevOps': ['Git', 'GitHub', 'Maven', 'Vercel', 'CI/CD', 'Postman']
