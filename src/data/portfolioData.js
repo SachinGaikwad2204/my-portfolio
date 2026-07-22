@@ -10,22 +10,23 @@ export const personalInfo = {
 };
 
 export const skills = {
-  languages: ['Java', 'JavaScript', 'SQL', 'HTML5', 'CSS3', 'Python'],
-  backend: ['Spring Boot', 'Spring MVC', 'RESTful API', 'Microservices', 'Hibernate ORM'],
-  frontend: ['React.js', 'Thymeleaf', 'Responsive UI', 'Component-Based Architecture'],
-  database: ['MySQL', 'PostgreSQL', 'Query Optimization', 'Schema Design'],
+  'Languages': ['Java', 'JavaScript', 'SQL', 'HTML5', 'CSS3', 'Python'],
+  'Backend': ['Spring Boot', 'Spring MVC', 'RESTful API', 'Microservices', 'Hibernate ORM'],
+  'Frontend': ['React.js', 'Thymeleaf', 'Responsive UI', 'Component-Based Architecture'],
+  'Database': ['MySQL', 'PostgreSQL', 'Query Optimization', 'Schema Design'],
   'AI/ML & LLM': [
     'LLM Integration (GPT, Claude, Gemini)',
     'Prompt Engineering',
     'Web Speech API',
     'Voice Recognition & Synthesis',
-    'Natural Language Processing',
+    'Natural Language Processing (NLP)',
     'AI/ML Model Integration',
     'Intelligent Conversational AI',
-    'Fine-tuning LLMs'
+    'Fine-tuning LLMs',
+    'Voice AI JARVIS Core Development'
   ],
-  tools: ['Git', 'GitHub', 'Maven', 'Vercel', 'CI/CD', 'Postman'],
-  security: ['JWT', 'Spring Security', 'RBAC', 'OAuth2']
+  'Security': ['JWT', 'Spring Security', 'RBAC', 'OAuth2'],
+  'Tools & DevOps': ['Git', 'GitHub', 'Maven', 'Vercel', 'CI/CD', 'Postman']
 };
 
 export const projects = [
