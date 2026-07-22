@@ -1,28 +1,52 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaExclamationTriangle } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import { personalInfo } from '../data/portfolioData';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [showError, setShowError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(null); // 'success' | 'error' | null
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setStatus(null);
 
-    // Trigger error message immediately
-    setShowError(true);
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: 'e9355b8b-6bed-4376-a307-42aee5562559',
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
 
-    // Automatically trigger mailto link as a backup
-    const emailSubject = encodeURIComponent(formData.subject || 'Portfolio Inquiry');
-    const emailBody = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-    window.location.href = `mailto:${personalInfo.email}?subject=${emailSubject}&body=${emailBody}`;
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error('Submission error:', err);
+      setStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -78,7 +102,28 @@ const Contact = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="glass-card" style={{ padding: '36px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {showError && (
+            {status === 'success' && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid var(--accent-green)',
+                  color: 'var(--accent-green)',
+                  padding: '14px 18px',
+                  borderRadius: '12px',
+                  fontSize: '0.95rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+              >
+                <FaCheckCircle style={{ fontSize: '1.2rem', flexShrink: 0 }} />
+                <span>Message sent successfully! Check your email inbox.</span>
+              </motion.div>
+            )}
+
+            {status === 'error' && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -91,16 +136,11 @@ const Contact = () => {
                   fontSize: '0.92rem',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px'
+                  gap: '10px'
                 }}
               >
-                <FaExclamationTriangle style={{ fontSize: '1.4rem', flexShrink: 0, color: '#ef4444' }} />
-                <span>
-                  Unable to send directly from form. Opening email client, or click{' '}
-                  <a href={`mailto:${personalInfo.email}`} style={{ color: '#fff', underline: 'always', fontWeight: 'bold' }}>
-                    here to send email
-                  </a>.
-                </span>
+                <FaExclamationTriangle style={{ fontSize: '1.2rem', flexShrink: 0 }} />
+                <span>Error sending message. Please try again.</span>
               </motion.div>
             )}
 
@@ -112,8 +152,8 @@ const Contact = () => {
             <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required />
             <textarea name="message" placeholder="Your message..." value={formData.message} onChange={handleChange} rows="5" required />
 
-            <button type="submit" className="btn-primary">
-              Send Message <FaPaperPlane />
+            <button type="submit" className="btn-primary" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : <>Send Message <FaPaperPlane /></>}
             </button>
           </form>
         </div>
