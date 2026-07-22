@@ -34,7 +34,7 @@ export const projects = [
     title: 'Voice AI JARVIS Core',
     tech: ['React.js', 'LLM Integration', 'Web Speech API', 'AI/ML', 'Vercel'],
     description: 'Your intelligent voice companion powered by LLM ? ask, calculate, search, or just say hi. A voice-powered web application with 14+ recognized intents and AI/ML powered core.',
-    link: 'https://voice-ai-frontend-rmdhc6ygf-sachingaikwad2204s-projects.vercel.app/',
+    link: 'https://voice-ai-frontend-7bbzt9rm9-sachingaikwad2204s-projects.vercel.app/',
     github: 'https://github.com/SachinGaikwad2204/voice-ai-frontend',
     achievements: [
       'Built a voice-powered intelligent assistant with 14+ recognized intents',
