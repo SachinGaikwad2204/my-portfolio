@@ -1,12 +1,12 @@
 export const personalInfo = {
   name: 'Sachin Sominath Gaikwad',
-  title: 'Full Stack Software Developer',
+  title: 'Full Stack Software Developer | AI/ML Enthusiast',
   email: 'sachingaikwadbn@gmail.com',
   phone: '+91 97657 52923',
   location: 'Pune, Maharashtra, India',
   github: 'https://github.com/SachinGaikwad2204',
   linkedin: 'https://linkedin.com/in/yourusername',
-  summary: 'Passionate and driven Full Stack Software Developer with hands-on experience designing, building, and deploying production-ready web applications from the ground up. Proficient in Java Spring Boot REST API development, React.js frontend engineering, relational database design, and cloud deployment via Vercel.'
+  summary: 'Passionate Full Stack Developer specializing in AI-powered applications and voice interfaces. Experienced in building production-ready web applications with React.js, Spring Boot, and modern cloud deployment. Created Voice AI JARVIS Core with 14+ intents and <100ms response time.'
 };
 
 export const skills = {
@@ -14,6 +14,7 @@ export const skills = {
   backend: ['Spring Boot', 'Spring MVC', 'RESTful API', 'Microservices', 'Hibernate ORM'],
   frontend: ['React.js', 'Thymeleaf', 'Responsive UI', 'Component-Based Architecture'],
   database: ['MySQL', 'PostgreSQL', 'Query Optimization', 'Schema Design'],
+  'AI & Voice': ['Web Speech API', 'AI/ML Integration', 'Voice Recognition', 'Natural Language Processing'],
   tools: ['Git', 'GitHub', 'Maven', 'Vercel', 'CI/CD', 'Postman'],
   security: ['JWT', 'Spring Security', 'RBAC', 'OAuth2']
 };
@@ -37,7 +38,7 @@ export const projects = [
     id: 2,
     title: 'AI SaaS Web Application',
     tech: ['React.js', 'Spring Boot', 'AI API', 'Vercel'],
-    description: 'Architected and deployed a full-stack AI-powered SaaS web application on Vercel serving live production traffic with 99.9% uptime. Designed 10+ REST API endpoints for AI request routing and data management.',
+    description: 'Architected and deployed a full-stack AI-powered SaaS web application on Vercel serving live production traffic with 99.9% uptime.',
     link: 'https://ai-ui-app-chi.vercel.app/',
     github: 'https://github.com/yourusername/ai-app',
     achievements: [
@@ -51,12 +52,12 @@ export const projects = [
     id: 3,
     title: 'Employee Management System',
     tech: ['React.js', 'Spring Boot', 'MySQL', 'Hibernate'],
-    description: 'Designed and deployed a production-ready full-stack enterprise HR management system on Vercel, managing 100+ employee records with 15+ RESTful endpoints for complete CRUD operations.',
+    description: 'Production-ready enterprise HR management system managing 100+ employee records with 15+ RESTful endpoints.',
     link: 'https://employee-mgt-system-navy.vercel.app/',
     github: 'https://github.com/yourusername/employee-mgt',
     achievements: [
       'Reduced data retrieval time by 35% through optimized database schema',
-      'Implemented role-based access control with 3 user roles (Admin, Manager, Employee)',
+      'Implemented role-based access control with 3 user roles',
       'Built 12+ dynamic React.js UI components for responsive interface',
       'Reduced boilerplate SQL by 60% using Hibernate ORM'
     ]
@@ -65,11 +66,11 @@ export const projects = [
 
 export const experience = {
   highlights: [
-    'Deployed 2 full-stack production applications on Vercel with live traffic',
+    'Built Voice AI JARVIS Core with 14+ intents and <100ms response time',
+    'Deployed 3 full-stack production applications on Vercel',
     'Improved API response time by 30% (500ms -> 350ms)',
     'Reduced database retrieval time by 35% via optimized MySQL schema',
     'Reduced boilerplate SQL code by 60% leveraging Hibernate ORM',
-    'Secured 100% of API endpoints using JWT authentication and RBAC',
-    'Reduced manual HR tracking effort by 50% through automated attendance module'
+    'Secured 100% of API endpoints using JWT authentication and RBAC'
   ]
 };

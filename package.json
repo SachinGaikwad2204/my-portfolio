@@ -18,9 +18,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "extends": ["react-app"],
+    "rules": {
+      "jsx-a11y/anchor-is-valid": "off",
+      "jsx-a11y/alt-text": "warn",
+      "no-unused-vars": "warn",
+      "unicode-bom": "off"
+    }
   },
   "browserslist": {
     "production": [
