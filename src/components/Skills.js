@@ -1,27 +1,36 @@
 import React from 'react';
 import { skills } from '../data/portfolioData';
+import useReveal from '../hooks/useReveal';
+import './Skills.css';
+
+const CATEGORIES = {
+  'Languages': skills.languages,
+  'Backend': skills.backend,
+  'Frontend': skills.frontend,
+  'Database': skills.database,
+  'Security': skills.security,
+  'Tools & DevOps': skills.tools,
+};
 
 const Skills = () => {
-  const categories = {
-    'Languages': skills.languages,
-    'Backend': skills.backend,
-    'Frontend': skills.frontend,
-    'Database': skills.database,
-    'Tools & DevOps': skills.tools,
-    'Security': skills.security
-  };
-
+  const ref = useReveal();
   return (
-    <section style={{ padding: '100px 20px', background: '#0a0a0a' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: '2.8rem', textAlign: 'center', marginBottom: '50px', background: 'linear-gradient(135deg, #64f4ab, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Technical Skills</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-          {Object.entries(categories).map(([category, items]) => (
-            <div key={category} style={{ background: '#1a1a1a', padding: '30px', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.05)', transition: 'all 0.3s ease' }}>
-              <h3 style={{ color: '#64f4ab', marginBottom: '20px', fontSize: '1.2rem', fontWeight: '600' }}>{category}</h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                {items.map((skill, index) => (
-                  <span key={index} style={{ background: 'rgba(100, 244, 171, 0.08)', color: '#64f4ab', padding: '8px 18px', borderRadius: '25px', fontSize: '0.9rem', border: '1px solid rgba(100, 244, 171, 0.15)' }}>{skill}</span>
+    <section className="skills" ref={ref}>
+      <div className="container">
+        <div className="section-label">Skills</div>
+        <h2 className="section-title reveal">What I build with.</h2>
+
+        <div className="skills-grid">
+          {Object.entries(CATEGORIES).map(([category, items], i) => (
+            <div
+              className="skill-card glass-card reveal"
+              key={category}
+              style={{ transitionDelay: `${i * 60}ms` }}
+            >
+              <h3 className="skill-card-title">{category}</h3>
+              <div className="skill-tags">
+                {items.map((skill) => (
+                  <span key={skill} className="skill-tag">{skill}</span>
                 ))}
               </div>
             </div>
