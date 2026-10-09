@@ -65,7 +65,7 @@ const Projects = () => {
               </div>
 
               <div style={{ display: 'flex', gap: '12px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-                <a href={project.link} target="_blank" rel="noreferrer" style={{
+                {project.link && <a href={project.link} target="_blank" rel="noreferrer" style={{
                   flex: 1,
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -80,7 +80,7 @@ const Projects = () => {
                   fontSize: '0.9rem'
                 }}>
                   <FaExternalLinkAlt /> Live Demo
-                </a>
+                </a>}
                 <a href={project.github} target="_blank" rel="noreferrer" style={{
                   display: 'inline-flex',
                   alignItems: 'center',

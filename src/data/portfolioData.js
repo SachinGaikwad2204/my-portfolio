@@ -5,7 +5,7 @@ export const personalInfo = {
   phone: '+91 97657 52923',
   location: 'Pune, Maharashtra, India',
   github: 'https://github.com/SachinGaikwad2204',
-  linkedin: 'https://linkedin.com/in/yourusername',
+  linkedin: 'https://linkedin.com/in/sachin-gaikwad-103a81295',
   summary: 'Passionate Full Stack Developer specializing in AI-powered applications, LLM integration, and voice interfaces. Experienced in building production-ready web applications with React.js, Spring Boot, and modern cloud deployment. Created Voice AI JARVIS Core with 14+ intents, LLM integration, and <100ms response time.'
 };
 
@@ -34,7 +34,7 @@ export const projects = [
     title: 'Voice AI JARVIS Core',
     tech: ['React.js', 'LLM Integration', 'Web Speech API', 'AI/ML', 'Vercel'],
     description: 'Your intelligent voice companion powered by LLM ? ask, calculate, search, or just say hi. A voice-powered web application with 14+ recognized intents and AI/ML powered core.',
-    link: 'https://voice-ai-frontend-7bbzt9rm9-sachingaikwad2204s-projects.vercel.app/',
+    link: 'https://voice-ai-frontend-neon.vercel.app/',
     github: 'https://github.com/SachinGaikwad2204/voice-ai-frontend',
     achievements: [
       'Built a voice-powered intelligent assistant with 14+ recognized intents',
@@ -50,7 +50,7 @@ export const projects = [
     tech: ['React.js', 'Spring Boot', 'AI API', 'LLM', 'Vercel'],
     description: 'Architected and deployed a full-stack AI-powered SaaS web application on Vercel serving live production traffic with 99.9% uptime.',
     link: 'https://ai-ui-app-chi.vercel.app/',
-    github: 'https://github.com/yourusername/ai-app',
+    github: 'https://github.com/SachinGaikwad2204/ai-ui',
     achievements: [
       'Integrated multiple LLM APIs for intelligent features',
       'Optimized API response times by 30% (500ms -> 350ms)',
@@ -63,8 +63,7 @@ export const projects = [
     title: 'Employee Management System',
     tech: ['React.js', 'Spring Boot', 'MySQL', 'Hibernate'],
     description: 'Production-ready enterprise HR management system managing 100+ employee records with 15+ RESTful endpoints.',
-    link: 'https://employee-mgt-system-navy.vercel.app/',
-    github: 'https://github.com/yourusername/employee-mgt',
+    github: 'https://github.com/SachinGaikwad2204/ems-fullstack-springboot-react-',
     achievements: [
       'Reduced data retrieval time by 35% through optimized database schema',
       'Implemented role-based access control with 3 user roles',
